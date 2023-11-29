@@ -15,7 +15,7 @@ datosPM <- sqrt(2*(1 - PM)) %>%
   bind_cols(.,phylum$V2)
 colnames(datosPM) <- c("Dim.1", "Dim.2", "Phylum")
 
-ggscatter(datosPM, x = "Dim.1", y = "Dim.2", color="Phylum",
+ggscatter(datosPM, x = "Dim.1", y = "Dim.2", color="Phylum", palette = rainbow(14),
           size = 1) + labs(title = "Vertex Histogram")
 
 
@@ -25,7 +25,7 @@ datosSP <- sqrt(2*(1 - SP)) %>%
   bind_cols(.,phylum$V2)
 colnames(datosSP) <- c("Dim.1", "Dim.2", "Phylum")
 
-ggscatter(datosSP, x = "Dim.1", y = "Dim.2", color = "Phylum",
+ggscatter(datosSP, x = "Dim.1", y = "Dim.2", color = "Phylum", palette = rainbow(14),
           size = 1) + labs(title = "Shortest-Path")
 
 
@@ -35,5 +35,22 @@ datosVH <- sqrt(2*(1 - VH)) %>%
   bind_cols(.,phylum$V2)
 colnames(datosVH) <- c("Dim.1", "Dim.2", "Phylum")
 
-ggscatter(datosVH, x = "Dim.1", y = "Dim.2", color = "Phylum",
+ggscatter(datosVH, x = "Dim.1", y = "Dim.2", color = "Phylum", palette = rainbow(14),
           size = 1) + labs(title = "Pyramid Match")
+
+datosPM <- sqrt(2*(1 - PM)) %>%
+  cmdscale() %>%
+  as_tibble()
+km <- kmeans(datosPM, 14, nstart = 9999, iter.max = 9999)
+print(km$betweenss/km$totss*100)
+clust <- km$cluster %>%
+  as.factor()
+datosPM <- datosPM %>%
+  mutate(groups = clust)
+colnames(datosPM) <- c("Dim.1", "Dim.2", "groups")
+ggscatter(datosPM, x = "Dim.1", y = "Dim.2",
+          color = "groups",
+          size = 1, 
+          ellipse = TRUE,
+          ellipse.type = "convex",
+          repel = TRUE)
