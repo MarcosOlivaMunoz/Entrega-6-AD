@@ -16,26 +16,23 @@ colnames(datosPM) <- c("Dim.1", "Dim.2")
  
 datosPM2 <-bind_cols(datosPM,Phylum=phylum$V2)
 
-ggscatter(datosPM2, x = "Dim.1", y = "Dim.2",color="Phylum", palette = "jco",
+ggscatter(datosPM2, x = "Dim.1", y = "Dim.2",color="Phylum",
           size = 1)
 
 
-
-
-
-
-
-mds.cor <- (1 - datosSP) %>%
+datosSP <- (1 - datosSP) %>%
   cmdscale() %>%
   as_tibble()
-colnames(mds.cor) <- c("Dim.1", "Dim.2")
-ggscatter(mds.cor, x = "Dim.1", y = "Dim.2",
+colnames(datosSP) <- c("Dim.1", "Dim.2")
+datosSP2 <-bind_cols(datosSP,Phylum=phylum$V2)
+ggscatter(datosSP2, x = "Dim.1", y = "Dim.2",color = "Phylum",
           size = 1)
 
-mds.cor <- (1 - datosVH) %>%
+datosVH <- (1 - datosVH) %>%
   cmdscale() %>%
   as_tibble()
-colnames(mds.cor) <- c("Dim.1", "Dim.2")
-ggscatter(mds.cor, x = "Dim.1", y = "Dim.2",
+colnames(datosVH) <- c("Dim.1", "Dim.2")
+datosVH2 <-bind_cols(datosVH,Phylum=phylum$V2)
+ggscatter(datosVH2, x = "Dim.1", y = "Dim.2", color = "Phylum",
           size = 1)
 
