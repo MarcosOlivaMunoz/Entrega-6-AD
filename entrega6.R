@@ -13,10 +13,10 @@ datosPM <- (1 - datosPM) %>%
   cmdscale() %>%
   as_tibble()
 colnames(datosPM) <- c("Dim.1", "Dim.2")
+ 
+datosPM2 <-bind_cols(datosPM,Phylum=phylum$V2)
 
-datosPM2 <-bind_cols(datosPM,phylum$V2)
-
-ggscatter(datosPM2, x = "Dim.1", y = "Dim.2",color=datosPM2$...3, palette = "jco",
+ggscatter(datosPM2, x = "Dim.1", y = "Dim.2",color="Phylum", palette = "jco",
           size = 1)
 
 
